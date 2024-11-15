@@ -2,8 +2,8 @@ package processor
 
 import (
 	"fmt"
+	"searcher/internal/crawler/spider"
 	"searcher/internal/index"
-	"searcher/pkg/crawler/spider"
 )
 
 type Proc struct {

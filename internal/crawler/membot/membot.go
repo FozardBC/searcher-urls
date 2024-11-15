@@ -1,6 +1,6 @@
 package membot
 
-import "searcher/pkg/crawler"
+import "searcher/internal/crawler"
 
 // Service - имитация служба поискового робота.
 type Service struct{}

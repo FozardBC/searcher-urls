@@ -1,6 +1,6 @@
 package index
 
-import "searcher/pkg/crawler"
+import "searcher/internal/crawler"
 
 type Index struct {
 	words map[string][]int
