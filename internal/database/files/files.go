@@ -9,9 +9,14 @@ type FilesDB struct {
 	f *os.File
 }
 
-func (df *FilesDB) Write(data []byte) {
+//*
+//func (df *FilesDB) Write(data []byte) (n int, err error) {
 
-}
+//n, err = df.f.WriteString(string(data))
+//if err != nil {
+//return nil, err
+///	}
+//}
 
 func New() (*FilesDB, error) {
 

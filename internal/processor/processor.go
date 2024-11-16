@@ -2,6 +2,7 @@ package processor
 
 import (
 	"fmt"
+	"io"
 	"searcher/internal/crawler/spider"
 	"searcher/internal/index"
 )
@@ -18,6 +19,10 @@ func New() *Proc {
 	}
 
 	return &p
+}
+
+func (p *Proc) Save(w io.Writer, ) {
+	w.Write()
 }
 
 func (p *Proc) FindUrls(t string) {
