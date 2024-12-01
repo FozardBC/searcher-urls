@@ -21,8 +21,8 @@ func New() *Proc {
 	return &p
 }
 
-func (p *Proc) Save(w io.Writer, ) {
-	w.Write()
+func (p *Proc) Save(w io.Writer) {
+	//w.Write()
 }
 
 func (p *Proc) FindUrls(t string) {

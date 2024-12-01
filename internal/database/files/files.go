@@ -20,7 +20,7 @@ type FilesDB struct {
 
 func New() (*FilesDB, error) {
 
-	if _, err := os.Stat("/db.txt"); errors.Is(err, os.ErrNotExist) {
+	if _, err := os.Stat("db.txt"); errors.Is(err, os.ErrNotExist) {
 
 		f, err := os.Create("db.txt")
 		if err != nil {
