@@ -2,7 +2,8 @@ package database
 
 import "io"
 
-type IDatabase interface {
+type Database interface {
 	io.Writer
 	io.Reader
+	Clear() error
 }
