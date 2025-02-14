@@ -11,21 +11,12 @@ import (
 var (
 	_, b, _, _ = runtime.Caller(0)
 	basepath   = filepath.Dir(b)
-	fPath      = filepath.Join(basepath, "db.txt")
+	fPath      = filepath.Join(basepath, "db.json")
 )
 
 type FilesDB struct {
 	f *os.File
 }
-
-//*
-//func (df *FilesDB) Write(data []byte) (n int, err error) {
-
-//n, err = df.f.WriteString(string(data))
-//if err != nil {
-//return nil, err
-///	}
-//}
 
 func New() *FilesDB {
 

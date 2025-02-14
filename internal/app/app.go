@@ -39,7 +39,7 @@ func Scan(p *processor.Proc, urls []string) {
 		}
 
 		splitFunc := func(r rune) bool {
-			return r == '/' || r == '?' || r == '&' || r == '#' || r == ' ' || r == '.' || r == ':'
+			return r == '/' || r == '?' || r == '&' || r == '#' || r == ' ' || r == '.' || r == ':' || r == '{' || r == '}'
 		}
 
 		for _, doc := range p.I.Docs {

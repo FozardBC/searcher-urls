@@ -8,20 +8,20 @@ import (
 )
 
 type Index struct {
-	words map[string][]int
+	Words map[string][]int
 	Docs  []crawler.Document
 }
 
 func New() *Index {
-	return &Index{words: make(map[string][]int)}
+	return &Index{Words: make(map[string][]int)}
 }
 
 func (i *Index) AddWord(word string, docId int) {
-	i.words[word] = append(i.words[word], docId)
+	i.Words[word] = append(i.Words[word], docId)
 }
 
 func (i *Index) DocsID(word string) []int {
-	return i.words[word]
+	return i.Words[word]
 }
 
 func (i *Index) ImportData(data string) error {
@@ -109,35 +109,4 @@ func (i *Index) impWords(words []string) error {
 
 	}
 	return nil
-}
-
-func (i *Index) ExportData() string {
-	sb := strings.Builder{}
-
-	for w, i := range i.words {
-
-		sb.WriteString(w + ":[")
-
-		for c, id := range i {
-
-			strconv.Itoa(id)
-
-			sb.WriteString(strconv.Itoa(id))
-
-			if c != len(i)-1 {
-				sb.WriteString(",")
-			}
-		}
-
-		sb.WriteString("]\n")
-	}
-
-	sb.WriteString("___\n")
-
-	for _, d := range i.Docs {
-		sb.WriteString(fmt.Sprintf("[%v]%s\n", d.ID, d.URL))
-	}
-
-	return sb.String()
-
 }

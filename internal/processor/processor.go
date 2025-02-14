@@ -1,6 +1,7 @@
 package processor
 
 import (
+	"encoding/json"
 	"fmt"
 	"searcher/internal/crawler/spider"
 	"searcher/internal/database"
@@ -27,40 +28,33 @@ func New() *Proc {
 
 func (p *Proc) Save() error {
 
-	data := fmt.Sprintf("\tURL:%s\n%s", p.U, p.I.ExportData())
+	b, err := json.Marshal(p.I)
+	if err != nil {
+		return fmt.Errorf("can't marshal docs: %w", err)
+	}
 
-	_, err := p.D.Write([]byte(data))
+	_, err = p.D.Write([]byte(b))
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
 func (p *Proc) Load() error {
 
-	data := make([]byte, 1024)
+	data := make([]byte, 4096)
 
 	n, err := p.D.Read(data)
 	if err != nil {
-		return err
+		return fmt.Errorf("can't read data: %w", err)
 	}
 
-	data = data[:n]
-
-	err = p.I.ImportData(string(data))
+	err = json.Unmarshal(data[:n], &p.I)
 	if err != nil {
-		return err
+		return fmt.Errorf("can't unmarshal data: %w", err)
 	}
 
 	return nil
 
-}
-
-func (p *Proc) FindUrls(t string) {
-
-	urlsID := p.I.DocsID(t)
-
-	for y, url := range urlsID {
-		fmt.Printf("[%v]: %s\n", y, p.I.Docs[url].URL)
-	}
 }
