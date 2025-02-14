@@ -11,13 +11,13 @@ func Start() {
 
 	p := processor.New()
 
-	//urls := []string{"https://google.com", "https://vk.com"}
-	//Scan(p, urls)
+	urls := []string{"https://google.com", "https://vk.com"}
+	Scan(p, urls)
 
-	err := p.Load()
-	if err != nil {
-		fmt.Print(err)
-	}
+	// err := p.Load()
+	// if err != nil {
+	// 	fmt.Print(err)
+	// }
 
 	fmt.Print("scaned")
 
