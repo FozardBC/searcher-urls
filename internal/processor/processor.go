@@ -13,7 +13,6 @@ type Proc struct {
 	I *index.Index
 	S *spider.Service
 	D database.Database
-	U string
 }
 
 func New() *Proc {
@@ -30,7 +29,7 @@ func (p *Proc) Save() error {
 
 	b, err := json.Marshal(p.I)
 	if err != nil {
-		return fmt.Errorf("can't marshal docs: %w", err)
+		return err
 	}
 
 	_, err = p.D.Write([]byte(b))

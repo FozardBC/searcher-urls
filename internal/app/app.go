@@ -2,7 +2,7 @@ package app
 
 import (
 	"fmt"
-	"searcher/internal/index"
+	"searcher/internal/crawler"
 	"searcher/internal/processor"
 	"strings"
 )
@@ -11,15 +11,17 @@ func Start() {
 
 	p := processor.New()
 
-	urls := []string{"https://google.com", "https://vk.com"}
-	Scan(p, urls)
+	// urls := []string{"https://google.com", "https://vk.com"}
+	// p.D.Clear()
 
-	// err := p.Load()
-	// if err != nil {
-	// 	fmt.Print(err)
-	// }
+	// Scan(p, urls)
 
-	fmt.Print("scaned")
+	// p.Save()
+
+	err := p.Load()
+	if err != nil {
+		fmt.Print(err)
+	}
 
 }
 
@@ -27,29 +29,28 @@ func Scan(p *processor.Proc, urls []string) {
 
 	var err error
 
-	p.D.Clear()
+	var data []crawler.Document
 
 	for _, url := range urls {
-		p.I = index.New()
-		p.U = url
-
-		p.I.Docs, err = p.S.Scan(url, 2) // получаем все отсканированные данные ID, URL, Body
+		data, err = p.S.Scan(url, 2) // получаем все отсканированные данные ID, URL, Body
 		if err != nil {
 			fmt.Print(err)
 		}
 
-		splitFunc := func(r rune) bool {
-			return r == '/' || r == '?' || r == '&' || r == '#' || r == ' ' || r == '.' || r == ':' || r == '{' || r == '}'
-		}
-
-		for _, doc := range p.I.Docs {
-			words := strings.FieldsFunc(doc.URL, splitFunc)
-
-			for _, w := range words {
-
-				p.I.AddWord(w, doc.ID)
-			}
-		}
-		p.Save()
+		p.I.Docs = append(p.I.Docs, data...)
 	}
+
+	splitFunc := func(r rune) bool {
+		return r == '/' || r == '?' || r == '&' || r == '#' || r == ' ' || r == '.' || r == ':' || r == '{' || r == '}'
+	}
+
+	for _, doc := range p.I.Docs {
+		words := strings.FieldsFunc(doc.URL, splitFunc)
+
+		for _, w := range words {
+
+			p.I.AddWord(w, doc.ID)
+		}
+	}
+
 }
